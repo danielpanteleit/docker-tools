@@ -1,0 +1,59 @@
+language: python
+
+python:
+  - '3.5'
+
+sudo: required
+
+services:
+  - docker
+
+install:
+  - pip install pytest
+
+script:
+  - pytest
+
+before_deploy:
+  - ./build.sh
+  - .travis/push-branch-tag.sh
+
+deploy:
+  - provider: releases
+    overwrite: true
+    api_key:
+      secure: cGT6KHI/sHsjAjulrOYmMVdpMtowpeVQAzIKYlfuCLVAfC4Dk9Qk9CF/62xDfLYq3zdh4EvxmrAXElM9sETRY57NCRtpqA2VZRrV31xM2XOeU+EEZ7j1C4AdqXaCax44vv4O74XqWKA0jPwAuHrKYEFjj4lmY4b12aplQTfdUDxoC6OvOOwAsjNXnDkSchpoI/DXhSeLt8XBzL6k2dO2YEKurqJWDewddFHkjVEw+pf2nrCSFNcGlbbzk3Dj4Wy1jaFM3bM/aQgP15vzudEVyGxx8zz+/c3fl8C3vFcJr36WQH1LlH68WOLL8c61cmCB3dgYiJBCITu+hBBZQSyeeQ5Y+vOeAyoXi7n4crDgUsRThnQ6MfpVboW1uzDZkknNXlgXKMtmV9JuiGBJ4SKmn59yKnWXfB2K9L5Jgja8FD68WiSzASQLcTfg+0ye+UAK9wp+oNmQICUxjYFaLxBaF4phyo9sist0/J8jGyyNfVcjJ3y9JVlX+JIO0cYHeqtvMFbUZhfaVlYrEs8NQVqFCpcq4SfdBqd7KCWF4W9iXUk4JxRRilA2zJsKX2SLz5Npkc0mPWAeVcQvN4GoBbDjgoHbBm1h/9HRM3bL4XdYX94EYRdOhCLt+y94pmW8x3Y70KyHpD9uFrHc7o9nX7BMnGKyrcIAHLoQwc6ea58N0AM=
+    file: dist/docker-tools
+    skip_cleanup: true
+    tag_name: latest-$TRAVIS_BRANCH
+    target_commitish: $TRAVIS_COMMIT
+    on:
+      repo: danielpanteleit/docker-tools
+      branch: master
+
+  - provider: releases
+    overwrite: true
+    api_key:
+      secure: cGT6KHI/sHsjAjulrOYmMVdpMtowpeVQAzIKYlfuCLVAfC4Dk9Qk9CF/62xDfLYq3zdh4EvxmrAXElM9sETRY57NCRtpqA2VZRrV31xM2XOeU+EEZ7j1C4AdqXaCax44vv4O74XqWKA0jPwAuHrKYEFjj4lmY4b12aplQTfdUDxoC6OvOOwAsjNXnDkSchpoI/DXhSeLt8XBzL6k2dO2YEKurqJWDewddFHkjVEw+pf2nrCSFNcGlbbzk3Dj4Wy1jaFM3bM/aQgP15vzudEVyGxx8zz+/c3fl8C3vFcJr36WQH1LlH68WOLL8c61cmCB3dgYiJBCITu+hBBZQSyeeQ5Y+vOeAyoXi7n4crDgUsRThnQ6MfpVboW1uzDZkknNXlgXKMtmV9JuiGBJ4SKmn59yKnWXfB2K9L5Jgja8FD68WiSzASQLcTfg+0ye+UAK9wp+oNmQICUxjYFaLxBaF4phyo9sist0/J8jGyyNfVcjJ3y9JVlX+JIO0cYHeqtvMFbUZhfaVlYrEs8NQVqFCpcq4SfdBqd7KCWF4W9iXUk4JxRRilA2zJsKX2SLz5Npkc0mPWAeVcQvN4GoBbDjgoHbBm1h/9HRM3bL4XdYX94EYRdOhCLt+y94pmW8x3Y70KyHpD9uFrHc7o9nX7BMnGKyrcIAHLoQwc6ea58N0AM=
+    file: dist/docker-tools
+    skip_cleanup: true
+    tag_name: latest-$TRAVIS_BRANCH
+    target_commitish: $TRAVIS_COMMIT
+    on:
+      repo: danielpanteleit/docker-tools
+      branch: dev
+
+  - provider: releases
+    overwrite: true
+    api_key:
+      secure: cGT6KHI/sHsjAjulrOYmMVdpMtowpeVQAzIKYlfuCLVAfC4Dk9Qk9CF/62xDfLYq3zdh4EvxmrAXElM9sETRY57NCRtpqA2VZRrV31xM2XOeU+EEZ7j1C4AdqXaCax44vv4O74XqWKA0jPwAuHrKYEFjj4lmY4b12aplQTfdUDxoC6OvOOwAsjNXnDkSchpoI/DXhSeLt8XBzL6k2dO2YEKurqJWDewddFHkjVEw+pf2nrCSFNcGlbbzk3Dj4Wy1jaFM3bM/aQgP15vzudEVyGxx8zz+/c3fl8C3vFcJr36WQH1LlH68WOLL8c61cmCB3dgYiJBCITu+hBBZQSyeeQ5Y+vOeAyoXi7n4crDgUsRThnQ6MfpVboW1uzDZkknNXlgXKMtmV9JuiGBJ4SKmn59yKnWXfB2K9L5Jgja8FD68WiSzASQLcTfg+0ye+UAK9wp+oNmQICUxjYFaLxBaF4phyo9sist0/J8jGyyNfVcjJ3y9JVlX+JIO0cYHeqtvMFbUZhfaVlYrEs8NQVqFCpcq4SfdBqd7KCWF4W9iXUk4JxRRilA2zJsKX2SLz5Npkc0mPWAeVcQvN4GoBbDjgoHbBm1h/9HRM3bL4XdYX94EYRdOhCLt+y94pmW8x3Y70KyHpD9uFrHc7o9nX7BMnGKyrcIAHLoQwc6ea58N0AM=
+    file: dist/docker-tools
+    skip_cleanup: true
+    on:
+      tags: true
+
+branches:
+  only:
+    - master
+    - dev
+    - /^v\d+/
